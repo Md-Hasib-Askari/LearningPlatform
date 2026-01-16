@@ -22,19 +22,9 @@ public class AuthService : IAuthService
         _logger = logger;
     }
 
-    public Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken = default)
-    {
-        return _userRepository.GetByEmailAsync(email, cancellationToken);
-    }
-
-    public Task<User?> GetUserByIdAsync(Guid userId, CancellationToken cancellationToken = default)
-    {
-        return _userRepository.GetByIdAsync(userId, cancellationToken);
-    }
-
     public async Task<RoleEnum> GetUserRolesAsync(Guid userId, CancellationToken cancellationToken = default)
     {
-        var user = await GetUserByIdAsync(userId, cancellationToken);
+        var user = await _userRepository.GetByIdAsync(userId, cancellationToken);
         if (user == null)
         {
             throw new InvalidOperationException("User not found.");
@@ -44,7 +34,7 @@ public class AuthService : IAuthService
 
     public async Task<string?> LoginAsync(LoginDto loginDto, CancellationToken cancellationToken = default)
     {
-        var user = await GetUserByEmailAsync(loginDto.Email, cancellationToken);
+        var user = await _userRepository.GetByEmailAsync(loginDto.Email, cancellationToken);
         if (user == null)
         {
             return null;
@@ -77,22 +67,6 @@ public class AuthService : IAuthService
         );
         await _userRepository.AddAsync(userToCreate, cancellationToken);
         return userToCreate;
-    }
-
-    public async Task UpdateUserAsync(Guid userId, UpdateUserDto updateUserDto, CancellationToken cancellationToken = default)
-    {
-        var user = await GetUserByIdAsync(userId, cancellationToken);
-        if (user == null)
-        {
-            throw new InvalidOperationException("User not found.");
-        }
-
-        var passwordSettings = _configuration.GetSection("passwordSettings");
-        var saltRounds = int.Parse(passwordSettings["SaltRounds"] ?? "10");
-        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(updateUserDto.Password1, saltRounds);
-
-        var updatedUser = User.Update(user, updateUserDto.FirstName, updateUserDto.LastName, hashedPassword);
-        await _userRepository.UpdateAsync(updatedUser, cancellationToken);
     }
 
     public async Task<bool> UserExistsAsync(string email, CancellationToken cancellationToken = default)

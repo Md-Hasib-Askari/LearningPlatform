@@ -2,7 +2,6 @@ using LearningPlatform.Business.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 public static class ServiceDependencyInjection
 {
@@ -12,6 +11,7 @@ public static class ServiceDependencyInjection
         // Register business services here
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IJwtService, JwtService>();
+        services.AddScoped<IUserService, UserService>();
 
         // Email Service Registration
         var emailSettings = configuration.GetSection("Email");
