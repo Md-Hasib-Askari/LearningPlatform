@@ -45,18 +45,10 @@ public class User : BaseEntity, IAuditableEntity
         return user;
     }
 
-    public static User Update(User user, string? firstName, string? lastName, string? passwordHash)
+    public static User Update(User user, string firstName, string lastName, string passwordHash)
     {
-        if (firstName != null && lastName != null)
-        {
-            user.SetName(firstName, lastName);
-        }
-
-        if (passwordHash != null)
-        {
-            user.SetPasswordHash(passwordHash);
-        }
-
+        user.SetName(firstName, lastName);
+        user.SetPasswordHash(passwordHash);
         return user;
     }
 
@@ -66,26 +58,14 @@ public class User : BaseEntity, IAuditableEntity
     }
 
     // Behavioral Methods
-    [MemberNotNull(nameof(FirstName), nameof(LastName))]
     public void SetName(string firstName, string lastName)
     {
-        if (string.IsNullOrWhiteSpace(firstName))
-            throw new DomainException("First name is required");
-
-        if (string.IsNullOrWhiteSpace(lastName))
-            throw new DomainException("Last name is required");
-
         FirstName = firstName;
         LastName = lastName;
     }
 
-    [MemberNotNull(nameof(PasswordHash))]
-
     public void SetPasswordHash(string passwordHash)
     {
-        if (string.IsNullOrWhiteSpace(passwordHash))
-            throw new DomainException("Password hash is required");
-
         PasswordHash = passwordHash;
     }
 
@@ -103,9 +83,6 @@ public class User : BaseEntity, IAuditableEntity
 
     public void SetPasswordResetToken(string token, DateTime? expiry)
     {
-        if (string.IsNullOrWhiteSpace(token))
-            throw new DomainException("Password reset token is required");
-
         PasswordResetToken = token;
         PasswordResetTokenExpiry = expiry;
     }

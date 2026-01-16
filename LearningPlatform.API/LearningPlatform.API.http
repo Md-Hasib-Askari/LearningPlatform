@@ -92,3 +92,63 @@ Accept: application/json
 ### User - Get User Public Profile by ID
 GET {{API_HostAddress}}/users/{{userId}}/public-profile
 Accept: application/json
+
+### Course
+### =================================================
+# GET    /api/courses✅
+# GET    /api/courses/{id}✅
+# POST   /api/courses✅
+# PUT    /api/courses/{id}✅
+# DELETE /api/courses/{id}✅
+# POST   /api/courses/{id}/publish
+# POST   /api/courses/{id}/enroll
+# DELETE /api/courses/{id}/unenroll
+# GET    /api/courses/my-courses
+# GET    /api/courses/my-enrollments
+# GET    /api/courses/instructor-courses
+# GET    /api/courses/{id}/students
+# GET    /api/courses/recommended
+# GET    /api/courses/trending
+# POST   /api/courses/{id}/review
+
+### Course - Get All Courses
+GET {{API_HostAddress}}/courses
+Accept: application/json
+
+### Course - Get Course by ID
+@courseId = 1
+GET {{API_HostAddress}}/courses/{{courseId}}
+Accept: application/json
+
+### Course - Create New Course
+POST {{API_HostAddress}}/courses    
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+    "title": "Introduction to Programming",
+    "description": "Learn the basics of programming using Python.",
+    "instructorId": "9bcca7d0-7402-4a96-883e-d621bc74b6f3",
+    "category": "Programming",
+    "price": 49.99
+}
+
+### Course - Update Course by ID
+@courseId = 1
+PUT {{API_HostAddress}}/courses/{{courseId}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+    "title": "Introduction to Programming - Updated",
+    "description": "Learn the basics of programming using Python. Updated content included.",
+    "instructorId": "9bcca7d0-7402-4a96-883e-d621bc74b6f3",
+    "category": "Programming",
+    "price": 59.99
+}
+
+### Course - Delete Course by ID
+@courseId = 1
+DELETE {{API_HostAddress}}/courses/{{courseId}}
+Authorization: Bearer {{admin_token}}
+Accept: application/json

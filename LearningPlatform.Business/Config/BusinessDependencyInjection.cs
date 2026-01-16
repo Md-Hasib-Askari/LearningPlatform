@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-public static class ServiceDependencyInjection
+public static class BusinessDependencyInjection
 {
     public static IServiceCollection AddBusinessServices(
         this IServiceCollection services, IConfiguration configuration)
@@ -12,6 +12,7 @@ public static class ServiceDependencyInjection
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<ICourseService, CourseService>();
 
         // Email Service Registration
         var emailSettings = configuration.GetSection("Email");
