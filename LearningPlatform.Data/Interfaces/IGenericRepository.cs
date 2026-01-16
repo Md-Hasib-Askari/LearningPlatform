@@ -1,3 +1,5 @@
+namespace LearningPlatform.Data.Interfaces;
+
 public interface IGenericRepository<T> where T : class
 {
     Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);

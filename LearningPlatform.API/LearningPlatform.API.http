@@ -1,6 +1,52 @@
 @API_HostAddress = http://localhost:5255
+@admin_token = YOUR_ADMIN_JWT_TOKEN_HERE
+@user_token = YOUR_USER_JWT_TOKEN_HERE
 
 GET {{API_HostAddress}}/health/
 Accept: application/json
 
-###
+### Auth
+### =================================================
+### Auth - Register
+POST {{API_HostAddress}}/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "user@example.com",
+    "password1": "Password123!",
+    "password2": "Password123!"
+}
+
+### Auth - Login
+POST {{API_HostAddress}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "user@example.com",
+    "password": "Password123!"
+}
+
+### Auth - Verify User
+POST {{API_HostAddress}}/auth/verify
+Authorization: Bearer {{user_token}}
+
+### Auth - Forgot Password
+POST {{API_HostAddress}}/auth/forgot-password
+Content-Type: application/json
+
+{
+    "email": "user@example.com"
+}
+
+### Auth - Reset Password
+POST {{API_HostAddress}}/auth/reset-password
+Content-Type: application/json
+
+{
+    "email": "user@example.com",
+    "token": "RESET_TOKEN_FROM_EMAIL",
+    "newPassword1": "NewPassword123!",
+    "newPassword2": "NewPassword123!"
+}

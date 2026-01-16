@@ -1,20 +1,24 @@
 using System.Net;
 using System.Net.Mail;
+using LearningPlatform.Business.Interfaces;
 using Microsoft.Extensions.Configuration;
 
 public class EmailService : IEmailService
 {
-    private readonly SmtpClient _smtpClient;
+    private readonly ISmtpClient _smtpClient;
     private readonly string _fromAddress;
 
-    public EmailService(string smtpHost, int smtpPort, string fromAddress, string smtpUser = "", string smtpPass = "", IConfiguration configuration = null!)
+    public EmailService(ISmtpClient smtpClient, IConfiguration configuration)
     {
-        _smtpClient = new SmtpClient(smtpHost, smtpPort, configuration)
-        {
-            Credentials = new NetworkCredential(smtpUser, smtpPass),
-            EnableSsl = true
-        };
-        _fromAddress = fromAddress;
+        // var smtpHost = configuration["Email:SmtpHost"];
+        // var smtpPort = int.Parse(configuration["Email:SmtpPort"] ?? "25");
+        // var smtpUser = configuration["Email:SmtpUser"];
+        // var smtpPass = configuration["Email:SmtpPass"];
+        // var fromAddress = configuration["Email:FromAddress"];
+
+        _smtpClient = smtpClient;
+        _fromAddress = configuration["Email:FromAddress"]!;
+
     }
 
     public async Task SendEmailAsync(string to, string subject, string body, CancellationToken cancellationToken = default)

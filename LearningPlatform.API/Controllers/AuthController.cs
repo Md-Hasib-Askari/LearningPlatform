@@ -1,6 +1,8 @@
+using LearningPlatform.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using TaskManagement.Business.Interfaces;
 
+[ApiController]
+[Route("auth")]
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;

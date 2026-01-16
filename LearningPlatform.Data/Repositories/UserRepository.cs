@@ -1,3 +1,4 @@
+using LearningPlatform.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 public class UserRepository : IGenericRepository<User>, IUserRepository

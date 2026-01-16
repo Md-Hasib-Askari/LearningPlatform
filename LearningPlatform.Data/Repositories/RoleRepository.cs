@@ -1,3 +1,4 @@
+using LearningPlatform.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 public class RoleRepository : IGenericRepository<Role>, IRoleRepository

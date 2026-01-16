@@ -1,5 +1,6 @@
+using LearningPlatform.Business.Interfaces;
 using Microsoft.Extensions.Configuration;
-using TaskManagement.Business.Interfaces;
+using LearningPlatform.Data.Interfaces;
 
 public class AuthService : IAuthService
 {

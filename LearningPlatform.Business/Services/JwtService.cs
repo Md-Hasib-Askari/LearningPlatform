@@ -1,8 +1,8 @@
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Options;
-using TaskManagement.Business.Interfaces;
 using Microsoft.IdentityModel.Tokens;
+using LearningPlatform.Business.Interfaces;
 
 public class JwtService : IJwtService
 {

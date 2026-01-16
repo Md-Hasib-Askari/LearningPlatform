@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace TaskManagement.Business.Interfaces;
+namespace LearningPlatform.Business.Interfaces;
 
 public interface IJwtService
 {

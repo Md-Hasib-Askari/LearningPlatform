@@ -1,3 +1,5 @@
+namespace LearningPlatform.Data.Interfaces;
+
 public interface IRoleRepository : IGenericRepository<Role>
 {
     Task<Role?> GetByNameAsync(string name, CancellationToken cancellationToken = default);

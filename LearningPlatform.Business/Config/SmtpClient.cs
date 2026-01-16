@@ -2,12 +2,8 @@ using System.Net;
 using System.Net.Mail;
 using Microsoft.Extensions.Configuration;
 
-public class SmtpClient(string host, int port, IConfiguration configuration)
+public class SmtpClient : ISmtpClient
 {
-    private readonly string _host = host;
-    private readonly int _port = port;
-    private readonly IConfiguration _configuration = configuration;
-
     public NetworkCredential Credentials { get; set; } = null!;
     public bool EnableSsl { get; set; }
 
