@@ -37,6 +37,7 @@ public class EmailService : IEmailService
 
         try
         {
+            // TODO: Uncomment the line below to actually send emails
             // await _smtpClient.SendMailAsync(mailMessage, cancellationToken);
             _logger.LogInformation("From: {From}", _fromAddress);
             _logger.LogInformation("Email sent to {To} with subject {Subject}", to, subject);
