@@ -15,7 +15,6 @@ public static class DataDependencyInjection
 
         // Repository Registrations
         services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IRoleRepository, RoleRepository>();
 
         // Other data layer services can be registered here
 

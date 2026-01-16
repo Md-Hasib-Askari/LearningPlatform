@@ -3,26 +3,29 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using LearningPlatform.Business.Interfaces;
+using LearningPlatform.Data.Domain.Enums;
+using Microsoft.Extensions.Logging;
 
 public class JwtService : IJwtService
 {
     private readonly JwtSettings _jwtSettings;
+    private readonly ILogger<JwtService> _logger;
 
-    public JwtService(IOptions<JwtSettings> jwtSettings)
+    public JwtService(IOptions<JwtSettings> jwtSettings, ILogger<JwtService> logger)
     {
         _jwtSettings = jwtSettings.Value;
+        _logger = logger;
     }
 
-    public string GenerateToken(Guid userId, string email, IEnumerable<string> roles)
+    public string GenerateToken(Guid userId, string email, RoleEnum role)
     {
-        var roleClaims = roles.Select(role => new Claim(ClaimTypes.Role, role));
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, email),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(ClaimTypes.Role, role.ToString())
         };
-        var allClaims = claims.Concat(roleClaims);
 
         var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -30,7 +33,7 @@ public class JwtService : IJwtService
         var token = new JwtSecurityToken(
             issuer: _jwtSettings.Issuer,
             audience: _jwtSettings.Audience,
-            claims: allClaims,
+            claims: claims,
             expires: DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
             signingCredentials: creds
         );
@@ -42,15 +45,28 @@ public class JwtService : IJwtService
     {
         try
         {
-            var principal = ValidateToken(token);
-            var userIdClaim = principal?.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);
-            if (userIdClaim != null && Guid.TryParse(userIdClaim.Value, out Guid userId))
+            var validatedToken = ValidateToken(token);
+            if (validatedToken != null)
             {
+                var jwtToken = validatedToken as JwtSecurityToken;
+                var userIdClaim = jwtToken?.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub);
+                if (userIdClaim == null)
+                {
+                    _logger.LogWarning("User ID claim not found in token.");
+                    return null;
+                }
+
+                if (!Guid.TryParse(userIdClaim.Value, out Guid userId))
+                {
+                    _logger.LogWarning("Invalid User ID format in token.");
+                    return null;
+                }
                 return userId;
             }
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogWarning("Failed to get user ID from token: {ExceptionMessage}", ex.Message);
             // Token validation failed
             return null;
         }
@@ -58,7 +74,7 @@ public class JwtService : IJwtService
         return null;
     }
 
-    public ClaimsPrincipal? ValidateToken(string token)
+    public SecurityToken? ValidateToken(string token)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = System.Text.Encoding.UTF8.GetBytes(_jwtSettings.SecretKey);
@@ -76,10 +92,13 @@ public class JwtService : IJwtService
                 IssuerSigningKey = new SymmetricSecurityKey(key)
             }, out SecurityToken validatedToken);
 
-            return principal;
+            // _logger.LogInformation("Token validated successfully: {ValidatedToken}", validatedToken);
+
+            return validatedToken;
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogWarning("Token validation failed: {ExceptionMessage}", ex.Message);
             // Token validation failed
             return null;
         }

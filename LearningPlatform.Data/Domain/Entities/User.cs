@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using LearningPlatform.Data.Domain.Enums;
 
 public class User : BaseEntity, IAuditableEntity
 {
@@ -23,17 +24,14 @@ public class User : BaseEntity, IAuditableEntity
     [Required]
     public bool IsActive { get; private set; }
 
-    public string PasswordResetToken { get; private set; } = null!;
+    public string PasswordResetToken { get; private set; } = string.Empty;
     public DateTime? PasswordResetTokenExpiry { get; private set; }
 
-    private readonly List<UserRole> _userRoles = new();
-    public IReadOnlyCollection<UserRole> UserRoles => _userRoles.AsReadOnly();
+    public RoleEnum Role { get; private set; } = RoleEnum.Guest;
 
     // Audit
     public DateTime CreatedAt { get; private set; }
-    public string? CreatedBy { get; private set; }
-    public DateTime? LastModifiedAt { get; private set; }
-    public string? LastModifiedBy { get; private set; }
+    public DateTime? UpdatedAt { get; private set; }
 
     // Factory Method
     public static User Create(string email, string passwordHash, string firstName, string lastName)
@@ -43,6 +41,7 @@ public class User : BaseEntity, IAuditableEntity
         user.SetPasswordHash(passwordHash);
         user.Email = email;
         user.IsActive = true;
+        user.AssignRole(RoleEnum.Guest);
         return user;
     }
 
@@ -61,15 +60,9 @@ public class User : BaseEntity, IAuditableEntity
         return user;
     }
 
-    public void AssignRole(Role role)
+    public void AssignRole(RoleEnum role)
     {
-        if (role == null)
-            throw new DomainException("Role cannot be null");
-
-        if (_userRoles.Any(ur => ur.RoleId == role.Id))
-            throw new DomainException("User already has this role assigned");
-
-        _userRoles.Add(UserRole.Create(this.Id, role.Id));
+        Role = role;
     }
 
     // Behavioral Methods

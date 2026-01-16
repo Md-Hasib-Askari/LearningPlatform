@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly ILogger<AuthController> _logger;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IAuthService authService, ILogger<AuthController> logger)
     {
         _authService = authService;
+        _logger = logger;
     }
 
     [HttpPost("verify")]
@@ -19,9 +21,9 @@ public class AuthController : ControllerBase
         var isValid = _authService.VerifyUserAsync(token);
         if (isValid)
         {
-            return Ok(new { Message = "User verified successfully." });
+            return Ok(new BaseResponse { Success = true });
         }
-        return Unauthorized(new { Message = "Invalid token." });
+        return Unauthorized(new BaseResponse { Success = false, ErrorMessage = "Invalid token." });
     }
 
     [HttpPost("register")]
@@ -37,22 +39,22 @@ public class AuthController : ControllerBase
         var token = await _authService.LoginAsync(loginDto);
         if (token != null)
         {
-            return Ok(new { Token = token });
+            return Ok(new LoginResponse { Success = true, Token = token });
         }
-        return Unauthorized(new { Message = "Invalid credentials." });
+        return Unauthorized(new LoginResponse { Success = false, ErrorMessage = "Invalid email or password." });
     }
 
     [HttpPost("forgot-password")]
     public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
     {
         await _authService.SendForgotPasswordTokenAsync(forgotPasswordDto);
-        return Ok(new { Message = "Password reset link sent to your email." });
+        return Ok(new BaseResponse { Success = true });
     }
 
     [HttpPost("reset-password")]
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
     {
-        await _authService.ResetPasswordAsync(resetPasswordDto.Email, resetPasswordDto);
-        return Ok(new { Message = "Password has been reset successfully." });
+        await _authService.ResetPasswordAsync(resetPasswordDto);
+        return Ok(new BaseResponse { Success = true });
     }
 }

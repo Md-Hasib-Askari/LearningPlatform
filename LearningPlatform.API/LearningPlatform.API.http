@@ -1,6 +1,6 @@
 @API_HostAddress = http://localhost:5255
-@admin_token = YOUR_ADMIN_JWT_TOKEN_HERE
-@user_token = YOUR_USER_JWT_TOKEN_HERE
+@admin_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YmNjYTdkMC03NDAyLTRhOTYtODgzZS1kNjIxYmM3NGI2ZjMiLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJqdGkiOiI4MjkzMTZlMC0yMGUyLTQwMGUtOWY3Mi1mNzk1OWM5YzVlOGEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJTdGFmZiIsImV4cCI6MTc2ODU4MTg5MSwiaXNzIjoiTGVhcm5pbmdQbGF0Zm9ybSIsImF1ZCI6IkxlYXJuaW5nUGxhdGZvcm1Vc2VycyJ9.jWhO7wZgByzNPW8C-97ksxHzWqmKVM0onj1K5KxEPzQ
+@user_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5MjdkZTFmYy01ZDcwLTQzNDQtOGQ0NS0yNzFiMGM4YTAwMzQiLCJlbWFpbCI6InVzZXIyQGV4YW1wbGUuY29tIiwianRpIjoiYTJiNTY5MjItNjg5OS00MThhLTgzMWItOGU2NDE3OWY1NjRhIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiR3Vlc3QiLCJleHAiOjE3Njg1ODE4NzYsImlzcyI6IkxlYXJuaW5nUGxhdGZvcm0iLCJhdWQiOiJMZWFybmluZ1BsYXRmb3JtVXNlcnMifQ.-RPwJVwBffg0xieMNC2llwKtg5XDjoyYdwUWKY87spU
 
 GET {{API_HostAddress}}/health/
 Accept: application/json
@@ -12,9 +12,9 @@ POST {{API_HostAddress}}/auth/register
 Content-Type: application/json
 
 {
-    "firstName": "John",
-    "lastName": "Doe",
-    "email": "user@example.com",
+    "firstName": "John 6",
+    "lastName": "Doe 6",
+    "email": "user6@example.com",
     "password1": "Password123!",
     "password2": "Password123!"
 }
@@ -24,8 +24,8 @@ POST {{API_HostAddress}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "user@example.com",
-    "password": "Password123!"
+    "email": "user2@example.com",
+    "password": "NewPassword123!"
 }
 
 ### Auth - Verify User
@@ -37,7 +37,7 @@ POST {{API_HostAddress}}/auth/forgot-password
 Content-Type: application/json
 
 {
-    "email": "user@example.com"
+    "email": "user2@example.com"
 }
 
 ### Auth - Reset Password
@@ -45,8 +45,8 @@ POST {{API_HostAddress}}/auth/reset-password
 Content-Type: application/json
 
 {
-    "email": "user@example.com",
-    "token": "RESET_TOKEN_FROM_EMAIL",
+    "email": "user2@example.com",
+    "token": "193167",
     "newPassword1": "NewPassword123!",
     "newPassword2": "NewPassword123!"
 }

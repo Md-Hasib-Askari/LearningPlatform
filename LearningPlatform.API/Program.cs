@@ -26,9 +26,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+    });
 builder.Services.AddDataServices(builder.Configuration)
-    .AddBusinessServices();
+    .AddBusinessServices(builder.Configuration);
 
 // OpenAPI / Swagger Configuration
 builder.Services.AddEndpointsApiExplorer();

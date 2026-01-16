@@ -1,11 +1,12 @@
-using System.Security.Claims;
+using LearningPlatform.Data.Domain.Enums;
+using Microsoft.IdentityModel.Tokens;
 
 namespace LearningPlatform.Business.Interfaces;
 
 public interface IJwtService
 {
-    string GenerateToken(Guid userId, string email, IEnumerable<string> roles);
+    string GenerateToken(Guid userId, string email, RoleEnum role);
     // string GenerateRefreshToken();
-    ClaimsPrincipal? ValidateToken(string token);
+    SecurityToken? ValidateToken(string token);
     Guid? GetUserIdFromToken(string token);
 }

@@ -1,6 +1,9 @@
 using LearningPlatform.Business.Interfaces;
 using Microsoft.Extensions.Configuration;
 using LearningPlatform.Data.Interfaces;
+using LearningPlatform.Data.Domain.Enums;
+using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 public class AuthService : IAuthService
 {
@@ -8,13 +11,15 @@ public class AuthService : IAuthService
     private readonly IJwtService _jwtService;
     private readonly IEmailService _emailService;
     private readonly IConfiguration _configuration;
+    private readonly ILogger<AuthService> _logger;
 
-    public AuthService(IUserRepository userRepository, IJwtService jwtService, IEmailService emailService, IConfiguration configuration)
+    public AuthService(IUserRepository userRepository, IJwtService jwtService, IEmailService emailService, IConfiguration configuration, ILogger<AuthService> logger)
     {
         _userRepository = userRepository;
         _jwtService = jwtService;
         _emailService = emailService;
         _configuration = configuration;
+        _logger = logger;
     }
 
     public Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken = default)
@@ -27,17 +32,17 @@ public class AuthService : IAuthService
         return _userRepository.GetByIdAsync(userId, cancellationToken);
     }
 
-    public async Task<IEnumerable<Role>> GetUserRolesAsync(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<RoleEnum> GetUserRolesAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         var user = await GetUserByIdAsync(userId, cancellationToken);
         if (user == null)
         {
-            return Enumerable.Empty<Role>();
+            throw new InvalidOperationException("User not found.");
         }
-        return user.UserRoles.Select(ur => ur.Role).ToList();
+        return user.Role;
     }
 
-    public async Task<User?> LoginAsync(LoginDto loginDto, CancellationToken cancellationToken = default)
+    public async Task<string?> LoginAsync(LoginDto loginDto, CancellationToken cancellationToken = default)
     {
         var user = await GetUserByEmailAsync(loginDto.Email, cancellationToken);
         if (user == null)
@@ -45,15 +50,12 @@ public class AuthService : IAuthService
             return null;
         }
 
-        var passwordSettings = _configuration.GetSection("passwordSettings");
-        var saltRounds = int.Parse(passwordSettings["SaltRounds"] ?? "10");
-
-        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(loginDto.Password, saltRounds);
-        if (user.PasswordHash != hashedPassword)
+        if (BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
         {
-            return null;
+            var token = _jwtService.GenerateToken(user.Id, user.Email, user.Role);
+            return token;
         }
-        return user;
+        return null;
     }
 
     public async Task<User> RegisterAsync(RegisterDto registerDto, CancellationToken cancellationToken = default)
@@ -113,14 +115,10 @@ public class AuthService : IAuthService
             throw new InvalidOperationException("User with this email does not exist.");
         }
 
-        var resetToken = Guid.NewGuid().ToString();
-
-        var passwordSettings = _configuration.GetSection("passwordSettings");
-        var saltRounds = int.Parse(passwordSettings["SaltRounds"] ?? "10");
-        var hashedResetToken = BCrypt.Net.BCrypt.HashPassword(resetToken, saltRounds);
+        var resetToken = Random.Shared.Next(100000, 999999).ToString();
 
         // Set token and expiry on user entity
-        user.SetPasswordResetToken(hashedResetToken, DateTime.UtcNow.AddHours(1));
+        user.SetPasswordResetToken(resetToken, DateTime.UtcNow.AddHours(1));
         await _userRepository.UpdateAsync(user, cancellationToken);
 
         // Send email with reset token
@@ -132,9 +130,9 @@ public class AuthService : IAuthService
         );
     }
 
-    public async Task ResetPasswordAsync(string email, ResetPasswordDto resetPasswordDto, CancellationToken cancellationToken = default)
+    public async Task ResetPasswordAsync(ResetPasswordDto resetPasswordDto, CancellationToken cancellationToken = default)
     {
-        var user = await _userRepository.GetByEmailAsync(email, cancellationToken);
+        var user = await _userRepository.GetByEmailAsync(resetPasswordDto.Email, cancellationToken);
         if (user == null)
         {
             throw new InvalidOperationException("User with this email does not exist.");
@@ -145,19 +143,18 @@ public class AuthService : IAuthService
             throw new InvalidOperationException("Password reset token has expired.");
         }
 
-        var isTokenValid = BCrypt.Net.BCrypt.Verify(resetPasswordDto.Token, user.PasswordResetToken);
-        if (!isTokenValid)
+        if (user.PasswordResetToken != resetPasswordDto.Token)
         {
             throw new InvalidOperationException("Invalid password reset token.");
         }
 
         var passwordSettings = _configuration.GetSection("passwordSettings");
-        var saltRounds = int.Parse(passwordSettings["SaltRounds"] ?? "10");
+        var saltRounds = int.Parse(passwordSettings["SaltRounds"] ?? "12");
         var hashedNewPassword = BCrypt.Net.BCrypt.HashPassword(resetPasswordDto.NewPassword1, saltRounds);
 
         // Clear reset token and expiry
         user.SetPasswordHash(hashedNewPassword);
-        user.SetPasswordResetToken(string.Empty, null);
+        user.ClearPasswordResetToken();
         await _userRepository.UpdateAsync(user, cancellationToken);
     }
 }
