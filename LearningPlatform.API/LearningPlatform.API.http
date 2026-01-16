@@ -1,6 +1,6 @@
-@LearningPlatform.API_HostAddress = http://localhost:5255
+@API_HostAddress = http://localhost:5255
 
-GET {{LearningPlatform.API_HostAddress}}/weatherforecast/
+GET {{API_HostAddress}}/health/
 Accept: application/json
 
 ###
