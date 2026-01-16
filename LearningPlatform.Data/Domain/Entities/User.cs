@@ -108,7 +108,7 @@ public class User : BaseEntity, IAuditableEntity
         IsActive = true;
     }
 
-    public void SetPasswordResetToken(string token, DateTime expiry)
+    public void SetPasswordResetToken(string token, DateTime? expiry)
     {
         if (string.IsNullOrWhiteSpace(token))
             throw new DomainException("Password reset token is required");

@@ -1,11 +1,15 @@
+using System.Net;
+using System.Net.Mail;
+using Microsoft.Extensions.Configuration;
+
 public class EmailService : IEmailService
 {
     private readonly SmtpClient _smtpClient;
     private readonly string _fromAddress;
 
-    public EmailService(string smtpHost, int smtpPort, string fromAddress, string smtpUser = "", string smtpPass = "")
+    public EmailService(string smtpHost, int smtpPort, string fromAddress, string smtpUser = "", string smtpPass = "", IConfiguration configuration = null!)
     {
-        _smtpClient = new SmtpClient(smtpHost, smtpPort)
+        _smtpClient = new SmtpClient(smtpHost, smtpPort, configuration)
         {
             Credentials = new NetworkCredential(smtpUser, smtpPass),
             EnableSsl = true

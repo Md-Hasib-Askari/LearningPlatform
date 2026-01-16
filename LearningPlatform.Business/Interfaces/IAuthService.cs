@@ -10,5 +10,6 @@ public interface IAuthService
     bool VerifyUserAsync(string token, CancellationToken cancellationToken = default);
     Task UpdateUserAsync(Guid userId, UpdateUserDto updateUserDto, CancellationToken cancellationToken = default);
     Task<IEnumerable<Role>> GetUserRolesAsync(Guid userId, CancellationToken cancellationToken = default);
-    Task ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto, CancellationToken cancellationToken = default);
+    Task SendForgotPasswordTokenAsync(ForgotPasswordDto forgotPasswordDto, CancellationToken cancellationToken = default);
+    Task ResetPasswordAsync(string email, ResetPasswordDto resetPasswordDto, CancellationToken cancellationToken = default);
 }
