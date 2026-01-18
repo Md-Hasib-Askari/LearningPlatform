@@ -42,6 +42,7 @@ public class User : BaseEntity, IAuditableEntity
         user.Email = email;
         user.IsActive = true;
         user.AssignRole(RoleEnum.Guest);
+        user.CreatedAt = DateTime.UtcNow;
         return user;
     }
 
@@ -49,6 +50,7 @@ public class User : BaseEntity, IAuditableEntity
     {
         user.SetName(firstName, lastName);
         user.SetPasswordHash(passwordHash);
+        user.UpdatedAt = DateTime.UtcNow;
         return user;
     }
 

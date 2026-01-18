@@ -53,12 +53,13 @@ Content-Type: application/json
 }
 
 ### Auth - Change Role (Admin Only)
+@instructorId = 95984583-a443-4aa6-86d0-1dbcf0f4067a
 POST {{API_HostAddress}}/auth/change-role
 Authorization: Bearer {{admin_token}}
 Content-Type: application/json
 
 {
-    "userId": "95984583-a443-4aa6-86d0-1dbcf0f4067a",
+    "userId": "{{instructorId}}",
     "newRole": "Instructor"
 }
 
@@ -135,15 +136,14 @@ Accept: application/json
 
 ### Course - Create New Course
 POST {{API_HostAddress}}/courses    
-Authorization: Bearer {{admin_token}}
+Authorization: Bearer {{user_token}}
 Content-Type: application/json
 
 {
-    "title": "Introduction to Programming",
-    "description": "Learn the basics of programming using Python.",
-    "instructorId": "9bcca7d0-7402-4a96-883e-d621bc74b6f3",
-    "category": "Programming",
-    "price": 49.99
+    "title": "Object-Oriented Programming",
+    "description": "Learn the principles of object-oriented programming using C#.",
+    "instructorId": "{{instructorId}}",
+    "DurationInHours": 35
 }
 
 ### Course - Update Course by ID

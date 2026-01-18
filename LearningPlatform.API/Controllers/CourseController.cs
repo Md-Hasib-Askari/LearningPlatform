@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("courses")]
+[Authorize(Roles = "Admin,Staff,Instructor")]
 public class CourseController : ControllerBase
 {
     private readonly ICourseService _courseService;
