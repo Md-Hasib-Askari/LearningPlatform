@@ -165,3 +165,75 @@ Content-Type: application/json
 DELETE {{API_HostAddress}}/courses/{{courseId}}
 Authorization: Bearer {{admin_token}}
 Accept: application/json
+
+### Modules and Lessons
+### =================================================
+
+### Module - Get Modules by Course ID
+@courseId = 1
+GET {{API_HostAddress}}/courses/{{courseId}}/modules
+Accept: application/json
+
+### Module - Create New Module for Course
+@courseId = 1
+POST {{API_HostAddress}}/courses/{{courseId}}/modules
+Authorization: Bearer {{instructor_token}}
+Content-Type: application/json
+{
+    "title": "Module 1: Getting Started",
+    "description": "Introduction to the course and setup instructions."
+}
+
+### Module - Update Module by ID
+@moduleId = 1
+PUT {{API_HostAddress}}/modules/{{moduleId}}
+Authorization: Bearer {{instructor_token}}
+Content-Type: application/json
+{
+    "title": "Module 1: Introduction - Updated",
+    "description": "Updated introduction and setup instructions."
+}
+
+### Module - Delete Module by ID
+@moduleId = 1
+DELETE {{API_HostAddress}}/modules/{{moduleId}}
+Authorization: Bearer {{instructor_token}}
+Accept: application/json
+
+### Lesson - Get Lessons by Module ID
+@moduleId = 1
+GET {{API_HostAddress}}/modules/{{moduleId}}/lessons
+Accept: application/json
+
+### Lesson - Create New Lesson for Module
+@moduleId = 1
+POST {{API_HostAddress}}/modules/{{moduleId}}/lessons
+Authorization: Bearer {{instructor_token}}
+Content-Type: application/json
+{
+    "title": "Lesson 1: Introduction to the Course",
+    "content": "Welcome to the course! In this lesson, we will cover the course objectives and structure."
+}
+
+### Lesson - Update Lesson by ID
+@lessonId = 1
+PUT {{API_HostAddress}}/lessons/{{lessonId}}
+Authorization: Bearer {{instructor_token}}
+Content-Type: application/json
+{
+    "title": "Lesson 1: Course Introduction - Updated",
+    "content": "Updated content for the course introduction lesson."
+}
+
+### Lesson - Delete Lesson by ID
+@lessonId = 1
+DELETE {{API_HostAddress}}/lessons/{{lessonId}}
+Authorization: Bearer {{instructor_token}}
+Accept: application/json
+
+### Lesson - Mark Lesson as Complete
+@lessonId = 1
+POST {{API_HostAddress}}/lessons/{{lessonId}}/complete
+Authorization: Bearer {{user_token}}
+Accept: application/json
+

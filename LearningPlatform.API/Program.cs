@@ -39,6 +39,9 @@ builder.Services.AddDataServices(builder.Configuration)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// AutoMapper Configuration
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 

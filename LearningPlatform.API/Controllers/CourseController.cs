@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 public class CourseController : ControllerBase
 {
     private readonly ICourseService _courseService;
+    private readonly IModuleService _moduleService;
 
-    public CourseController(ICourseService courseService)
+    public CourseController(ICourseService courseService, IModuleService moduleService)
     {
         _courseService = courseService;
+        _moduleService = moduleService;
     }
 
     [HttpGet]
@@ -70,5 +72,24 @@ public class CourseController : ControllerBase
         }
 
         return NoContent();
+    }
+
+    [HttpGet("{courseId:guid}/modules")]
+    public async Task<IActionResult> GetModulesByCourseId(Guid courseId, CancellationToken cancellationToken)
+    {
+        var modules = await _moduleService.GetModulesByCourseIdAsync(courseId, cancellationToken);
+        return Ok(modules);
+    }
+
+    [HttpPost("{courseId:guid}/modules")]
+    public async Task<IActionResult> CreateModule(Guid courseId, [FromBody] CreateModuleDto createModuleDto, CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var createdModule = await _moduleService.CreateModuleAsync(createModuleDto, cancellationToken);
+        return CreatedAtAction(nameof(GetModulesByCourseId), new { courseId }, createdModule);
     }
 }
