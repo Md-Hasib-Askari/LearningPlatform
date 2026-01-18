@@ -1,7 +1,7 @@
 @API_HostAddress = http://localhost:5255
-@admin_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YmNjYTdkMC03NDAyLTRhOTYtODgzZS1kNjIxYmM3NGI2ZjMiLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJqdGkiOiIxMTI2NWViNC03OWFmLTRkNGQtYjliZC1kYTUzNjc4N2MxNWYiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc2ODc0NTU0MSwiaXNzIjoiTGVhcm5pbmdQbGF0Zm9ybSIsImF1ZCI6IkxlYXJuaW5nUGxhdGZvcm1Vc2VycyJ9.ChiRngEj1JS5_EmkfxKcyFwvr5xiDSHtCSUg_Y-2uTI
+@admin_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YmNjYTdkMC03NDAyLTRhOTYtODgzZS1kNjIxYmM3NGI2ZjMiLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJqdGkiOiI2MTNhYThmNy0yMDNjLTRkZDAtOTYzOS0wOTI0N2NkZWVhZWIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc2ODc1NDQxNiwiaXNzIjoiTGVhcm5pbmdQbGF0Zm9ybSIsImF1ZCI6IkxlYXJuaW5nUGxhdGZvcm1Vc2VycyJ9.HLJ869NirMIZrgcWAfl9TQK9QglPQ9-9R9xsTUfx-xo
 @user_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NTk4NDU4My1hNDQzLTRhYTYtODZkMC0xZGJjZjBmNDA2N2EiLCJlbWFpbCI6InVzZXIzQGV4YW1wbGUuY29tIiwianRpIjoiNWM0NjRkNWUtZGEwZC00MDM3LWE4MzItMzZjOTFlOTFiZWVlIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiR3Vlc3QiLCJleHAiOjE3Njg3NDUwMDQsImlzcyI6IkxlYXJuaW5nUGxhdGZvcm0iLCJhdWQiOiJMZWFybmluZ1BsYXRmb3JtVXNlcnMifQ.eX6LRbY83_0p26CaxVoG3nNhfrg8nv5c2siATXu0xfA
-@instructor_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NTk4NDU4My1hNDQzLTRhYTYtODZkMC0xZGJjZjBmNDA2N2EiLCJlbWFpbCI6InVzZXIzQGV4YW1wbGUuY29tIiwianRpIjoiNWM0NjRkNWUtZGEwZC00MDM3LWE4MzItMzZjOTFlOTFiZWVlIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiR3Vlc3QiLCJleHAiOjE3Njg3NDUwMDQsImlzcyI6IkxlYXJuaW5nUGxhdGZvcm0iLCJhdWQiOiJMZWFybmluZ1BsYXRmb3JtVXNlcnMifQ.eX6LRbY83_0p26CaxVoG3nNhfrg8nv5c2siATXu0xfA
+@instructor_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NTk4NDU4My1hNDQzLTRhYTYtODZkMC0xZGJjZjBmNDA2N2EiLCJlbWFpbCI6InVzZXIzQGV4YW1wbGUuY29tIiwianRpIjoiZTViZGE1NzQtZjM1My00M2QxLTg3YzgtNGNiZWU4YTQxYmE2IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiSW5zdHJ1Y3RvciIsImV4cCI6MTc2ODc1NDQzNSwiaXNzIjoiTGVhcm5pbmdQbGF0Zm9ybSIsImF1ZCI6IkxlYXJuaW5nUGxhdGZvcm1Vc2VycyJ9.UW7Dn0soQ8IP3wE7XN4rx3Mx-xn2u-_YzGE1_ijDpcc
 
 GET {{API_HostAddress}}/health/
 Accept: application/json
@@ -25,7 +25,7 @@ POST {{API_HostAddress}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "user@example.com",
+    "email": "user3@example.com",
     "password": "Password123!"
 }
 
@@ -130,24 +130,29 @@ GET {{API_HostAddress}}/courses
 Accept: application/json
 
 ### Course - Get Course by ID
-@courseId = 1
+@courseId = 8dc446bf-cfa7-4569-be65-a4f82c7012ac
 GET {{API_HostAddress}}/courses/{{courseId}}
 Accept: application/json
 
 ### Course - Create New Course
 POST {{API_HostAddress}}/courses    
-Authorization: Bearer {{user_token}}
+Authorization: Bearer {{instructor_token}}
 Content-Type: application/json
 
+# {
+#     "title": "Object-Oriented Programming 2",
+#     "description": "Learn the principles of object-oriented programming using Java.",
+#     "instructorId": "{{instructorId}}",
+#     "DurationInHours": 35
+# }
 {
-    "title": "Object-Oriented Programming",
-    "description": "Learn the principles of object-oriented programming using C#.",
+    "title": "Dummy Course for Testing",
+    "description": "This is a dummy course created for testing purposes.",
     "instructorId": "{{instructorId}}",
     "DurationInHours": 35
 }
 
 ### Course - Update Course by ID
-@courseId = 1
 PUT {{API_HostAddress}}/courses/{{courseId}}
 Authorization: Bearer {{admin_token}}
 Content-Type: application/json
@@ -155,13 +160,13 @@ Content-Type: application/json
 {
     "title": "Introduction to Programming - Updated",
     "description": "Learn the basics of programming using Python. Updated content included.",
-    "instructorId": "9bcca7d0-7402-4a96-883e-d621bc74b6f3",
+    "instructorId": "{{instructorId}}",
     "category": "Programming",
-    "price": 59.99
+    "price": 59.99,
+    "DurationInHours": 25
 }
 
 ### Course - Delete Course by ID
-@courseId = 1
 DELETE {{API_HostAddress}}/courses/{{courseId}}
 Authorization: Bearer {{admin_token}}
 Accept: application/json
@@ -170,69 +175,69 @@ Accept: application/json
 ### =================================================
 
 ### Module - Get Modules by Course ID
-@courseId = 1
 GET {{API_HostAddress}}/courses/{{courseId}}/modules
 Accept: application/json
 
 ### Module - Create New Module for Course
-@courseId = 1
 POST {{API_HostAddress}}/courses/{{courseId}}/modules
 Authorization: Bearer {{instructor_token}}
 Content-Type: application/json
+
 {
-    "title": "Module 1: Getting Started",
-    "description": "Introduction to the course and setup instructions."
+    "title": "Module 2: Basics",
+    "description": "Covers the basic concepts and fundamentals."
 }
 
 ### Module - Update Module by ID
-@moduleId = 1
+@moduleId = fb456a6b-606a-4a18-90dd-af5bf5e19776
 PUT {{API_HostAddress}}/modules/{{moduleId}}
 Authorization: Bearer {{instructor_token}}
 Content-Type: application/json
+
 {
-    "title": "Module 1: Introduction - Updated",
-    "description": "Updated introduction and setup instructions."
+    "title": "Module 2: Basics - Updated",
+    "description": "Updated basic concepts and fundamentals."
 }
 
 ### Module - Delete Module by ID
-@moduleId = 1
 DELETE {{API_HostAddress}}/modules/{{moduleId}}
 Authorization: Bearer {{instructor_token}}
 Accept: application/json
 
 ### Lesson - Get Lessons by Module ID
-@moduleId = 1
 GET {{API_HostAddress}}/modules/{{moduleId}}/lessons
 Accept: application/json
 
 ### Lesson - Create New Lesson for Module
-@moduleId = 1
 POST {{API_HostAddress}}/modules/{{moduleId}}/lessons
 Authorization: Bearer {{instructor_token}}
 Content-Type: application/json
+
 {
-    "title": "Lesson 1: Introduction to the Course",
-    "content": "Welcome to the course! In this lesson, we will cover the course objectives and structure."
+    "title": "Lesson 4: Lets Get Started",
+    "description": "Introduction to getting started with the module.",
+    "contentType": "video",
+    "contentUrl": "https://example.com/lesson4-getting-started.mp4",
+    "orderIndex": 4
 }
 
 ### Lesson - Update Lesson by ID
-@lessonId = 1
+@lessonId = 53c0d5ff-a93b-4355-94a6-fe2618d28172
 PUT {{API_HostAddress}}/lessons/{{lessonId}}
 Authorization: Bearer {{instructor_token}}
 Content-Type: application/json
+
 {
     "title": "Lesson 1: Course Introduction - Updated",
     "content": "Updated content for the course introduction lesson."
 }
 
 ### Lesson - Delete Lesson by ID
-@lessonId = 1
 DELETE {{API_HostAddress}}/lessons/{{lessonId}}
 Authorization: Bearer {{instructor_token}}
 Accept: application/json
 
 ### Lesson - Mark Lesson as Complete
-@lessonId = 1
 POST {{API_HostAddress}}/lessons/{{lessonId}}/complete
 Authorization: Bearer {{user_token}}
 Accept: application/json

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("modules")]
 public class ModuleController : ControllerBase
 {
     private readonly IModuleService _moduleService;
@@ -12,7 +11,25 @@ public class ModuleController : ControllerBase
         _moduleService = moduleService;
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpGet("courses/{courseId:guid}/modules")]
+    public async Task<IActionResult> GetModulesByCourseId(Guid courseId, CancellationToken cancellationToken)
+    {
+        var modules = await _moduleService.GetModulesByCourseIdAsync(courseId, cancellationToken);
+        return Ok(modules);
+    }
+
+    [HttpPost("courses/{courseId:guid}/modules")]
+    public async Task<IActionResult> CreateModule(Guid courseId, [FromBody] CreateModuleDto createModuleDto, CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        var createdModule = await _moduleService.CreateModuleAsync(courseId, createModuleDto, cancellationToken);
+        return CreatedAtAction(nameof(GetModulesByCourseId), new { courseId }, createdModule);
+    }
+
+    [HttpPut("modules/{id:guid}")]
     public async Task<IActionResult> UpdateModule(Guid id, [FromBody] UpdateModuleDto updateModuleDto, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
@@ -29,7 +46,7 @@ public class ModuleController : ControllerBase
         return Ok(updatedModule);
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("modules/{id:guid}")]
     public async Task<IActionResult> DeleteModule(Guid id, CancellationToken cancellationToken)
     {
         await _moduleService.DeleteModuleAsync(id, cancellationToken);

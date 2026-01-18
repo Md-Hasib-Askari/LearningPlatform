@@ -10,9 +10,15 @@ public class ModuleService : IModuleService
         _mapper = mapper;
     }
 
-    public async Task<ModuleDto> CreateModuleAsync(CreateModuleDto createModuleDto, CancellationToken cancellationToken)
+    public async Task<ModuleDto> CreateModuleAsync(Guid courseId, CreateModuleDto createModuleDto, CancellationToken cancellationToken)
     {
-        var module = _mapper.Map<Module>(createModuleDto);
+        var module = new Module();
+        module.Create(
+            createModuleDto.Title,
+            createModuleDto.Description,
+            createModuleDto.OrderIndex,
+            courseId
+        );
         await _moduleRepo.AddAsync(module, cancellationToken);
         return _mapper.Map<ModuleDto>(module);
     }

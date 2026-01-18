@@ -8,19 +8,25 @@ public class Lesson : BaseEntity
     public int OrderIndex { get; private set; }
     public bool IsCompleted { get; private set; }
 
+    public DateTime CreatedAt { get; private set; }
+    public DateTime UpdatedAt { get; private set; }
+
+    // Navigation Properties
     public Guid ModuleId { get; private set; }
 
     [ForeignKey(nameof(ModuleId))]
     public Module Module { get; set; } = null!;
 
-    public DateTime CreatedAt { get; private set; }
-    public DateTime UpdatedAt { get; private set; }
 
-    public Lesson(string title, string contentType, string contentUrl, Guid moduleId)
+    // Factory Methods
+    public Lesson() { }
+
+    public void Create(string title, string contentType, string contentUrl, int orderIndex, Guid moduleId)
     {
         Title = title;
         ContentType = contentType;
         ContentUrl = contentUrl;
+        OrderIndex = orderIndex;
         ModuleId = moduleId;
         IsCompleted = false;
         CreatedAt = DateTime.UtcNow;

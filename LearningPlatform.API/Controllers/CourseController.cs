@@ -7,25 +7,28 @@ using Microsoft.AspNetCore.Mvc;
 public class CourseController : ControllerBase
 {
     private readonly ICourseService _courseService;
-    private readonly IModuleService _moduleService;
+    private readonly ILogger<CourseController> _logger;
 
-    public CourseController(ICourseService courseService, IModuleService moduleService)
+    public CourseController(ICourseService courseService, ILogger<CourseController> logger)
     {
         _courseService = courseService;
-        _moduleService = moduleService;
+        _logger = logger;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllCourses()
+    [AllowAnonymous]
+    public async Task<IActionResult> GetAllCourses(CancellationToken cancellationToken)
     {
-        var courses = await _courseService.GetAllAsync();
+        var courses = await _courseService.GetAllAsync(cancellationToken);
         return Ok(courses);
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetCourseById(Guid id)
+    [AllowAnonymous]
+    public async Task<IActionResult> GetCourseById(Guid id, CancellationToken cancellationToken)
     {
-        var course = await _courseService.GetByIdAsync(id);
+        _logger.LogInformation("Fetching course with ID: {CourseId}", id);
+        var course = await _courseService.GetByIdAsync(id, cancellationToken);
         if (course == null)
         {
             return NotFound();
@@ -34,26 +37,26 @@ public class CourseController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateCourse([FromBody] CreateCourseDto createCourseDto)
+    public async Task<IActionResult> CreateCourse([FromBody] CreateCourseDto createCourseDto, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        var createdCourse = await _courseService.CreateAsync(createCourseDto);
+        var createdCourse = await _courseService.CreateAsync(createCourseDto, cancellationToken);
         return CreatedAtAction(nameof(GetCourseById), new { id = createdCourse.Id }, createdCourse);
     }
 
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateCourse(Guid id, [FromBody] UpdateCourseDto updateCourseDto)
+    public async Task<IActionResult> UpdateCourse(Guid id, [FromBody] UpdateCourseDto updateCourseDto, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        var updatedCourse = await _courseService.UpdateAsync(id, updateCourseDto);
+        var updatedCourse = await _courseService.UpdateAsync(id, updateCourseDto, cancellationToken);
         if (updatedCourse == null)
         {
             return NotFound();
@@ -63,33 +66,14 @@ public class CourseController : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteCourse(Guid id)
+    public async Task<IActionResult> DeleteCourse(Guid id, CancellationToken cancellationToken)
     {
-        var deleted = await _courseService.DeleteAsync(id);
+        var deleted = await _courseService.DeleteAsync(id, cancellationToken);
         if (!deleted)
         {
             return NotFound();
         }
 
         return NoContent();
-    }
-
-    [HttpGet("{courseId:guid}/modules")]
-    public async Task<IActionResult> GetModulesByCourseId(Guid courseId, CancellationToken cancellationToken)
-    {
-        var modules = await _moduleService.GetModulesByCourseIdAsync(courseId, cancellationToken);
-        return Ok(modules);
-    }
-
-    [HttpPost("{courseId:guid}/modules")]
-    public async Task<IActionResult> CreateModule(Guid courseId, [FromBody] CreateModuleDto createModuleDto, CancellationToken cancellationToken)
-    {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
-        var createdModule = await _moduleService.CreateModuleAsync(createModuleDto, cancellationToken);
-        return CreatedAtAction(nameof(GetModulesByCourseId), new { courseId }, createdModule);
     }
 }

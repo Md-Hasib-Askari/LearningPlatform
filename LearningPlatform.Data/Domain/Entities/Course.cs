@@ -13,8 +13,13 @@ public class Course : BaseEntity, IAuditableEntity
     // Navigation Properties
     [ForeignKey(nameof(InstructorId))]
     public User? Instructor { get; private set; }
+    public ICollection<Module> Modules { get; private set; } = new List<Module>();
 
-    public Course(string title, string description, int durationInHours, Guid? instructorId)
+    // Constructor
+    public Course() { }
+
+    // Factory Methods
+    public void Create(string title, string description, int durationInHours, Guid? instructorId)
     {
         Title = title;
         Description = description;

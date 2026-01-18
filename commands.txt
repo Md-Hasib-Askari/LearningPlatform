@@ -1,0 +1,3 @@
+dotnet ef migrations add UpdateMessage --project LearningPlatform.Data/ --startup-project LearningPlatform.API/
+
+dotnet ef database update --project LearningPlatform.Data/ --startup-project LearningPlatform.API/

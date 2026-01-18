@@ -6,17 +6,22 @@ public class Module : BaseEntity
     public string Description { get; private set; } = null!;
     public int OrderIndex { get; private set; }
     public Guid CourseId { get; private set; }
-
-    [ForeignKey(nameof(CourseId))]
-    public Course Course { get; set; } = null!;
-
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
 
-    public Module(string title, string description, Guid courseId)
+    // Navigation Properties
+    [ForeignKey(nameof(CourseId))]
+    public Course Course { get; set; } = null!;
+    public ICollection<Lesson> Lessons { get; private set; } = new List<Lesson>();
+
+    // Factory Methods
+    public Module() { }
+
+    public void Create(string title, string description, int orderIndex, Guid courseId)
     {
         Title = title;
         Description = description;
+        OrderIndex = orderIndex;
         CourseId = courseId;
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
@@ -35,10 +40,3 @@ public class Module : BaseEntity
         UpdatedAt = DateTime.UtcNow;
     }
 }
-
-// Id (PK)         │       │ Progress %       │
-// │ CourseId (FK)   │       └──────────────────┘
-// │ Title           │
-// │ Description     │              │
-// │ OrderIndex      │         1:N  │
-// │ CreatedAt

@@ -13,7 +13,14 @@ public class LessonService : ILessonService
 
     public async Task<LessonDto> CreateLessonAsync(CreateLessonDto createLessonDto, CancellationToken cancellationToken)
     {
-        var lesson = _mapper.Map<Lesson>(createLessonDto);
+        var lesson = new Lesson();
+        lesson.Create(
+            createLessonDto.Title,
+            createLessonDto.ContentType,
+            createLessonDto.ContentUrl,
+            createLessonDto.OrderIndex,
+            createLessonDto.ModuleId
+        );
         await _lessonRepo.AddAsync(lesson, cancellationToken);
         return _mapper.Map<LessonDto>(lesson);
     }

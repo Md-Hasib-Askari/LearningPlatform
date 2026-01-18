@@ -13,6 +13,8 @@ public static class BusinessDependencyInjection
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ICourseService, CourseService>();
+        services.AddScoped<IModuleService, ModuleService>();
+        services.AddScoped<ILessonService, LessonService>();
 
         // Email Service Registration
         var emailSettings = configuration.GetSection("Email");

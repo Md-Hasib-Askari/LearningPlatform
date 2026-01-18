@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using LearningPlatform.Data.Domain.Enums;
 
 public class User : BaseEntity, IAuditableEntity
@@ -33,7 +32,11 @@ public class User : BaseEntity, IAuditableEntity
     public DateTime CreatedAt { get; private set; }
     public DateTime? UpdatedAt { get; private set; }
 
-    // Factory Method
+    // Navigation Properties
+    public ICollection<Course> Courses { get; private set; } = new List<Course>();
+
+
+    // Factory Methods
     public static User Create(string email, string passwordHash, string firstName, string lastName)
     {
         var user = new User();
