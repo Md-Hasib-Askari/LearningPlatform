@@ -11,12 +11,6 @@ public class CourseController : ControllerBase
         _courseService = courseService;
     }
 
-    //     # GET    /api/courses✅
-    // # GET    /api/courses/{id}✅
-    // # POST   /api/courses✅
-    // # PUT    /api/courses/{id}✅
-    // # DELETE /api/courses/{id}✅
-
     [HttpGet]
     public async Task<IActionResult> GetAllCourses()
     {

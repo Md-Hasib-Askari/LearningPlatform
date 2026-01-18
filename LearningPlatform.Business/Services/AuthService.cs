@@ -131,4 +131,9 @@ public class AuthService : IAuthService
         user.ClearPasswordResetToken();
         await _userRepository.UpdateAsync(user, cancellationToken);
     }
+
+    public Task ChangeUserRoleAsync(ChangeUserRoleDto changeUserRoleDto, CancellationToken cancellationToken = default)
+    {
+        return _userRepository.UpdateUserRoleAsync(changeUserRoleDto.UserId, changeUserRoleDto.NewRole, cancellationToken);
+    }
 }

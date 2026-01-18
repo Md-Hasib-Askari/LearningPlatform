@@ -1,3 +1,4 @@
+using LearningPlatform.Data.Domain.Enums;
 using LearningPlatform.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,6 +42,19 @@ public class UserRepository : IGenericRepository<User>, IUserRepository
     public async Task UpdateAsync(User entity, CancellationToken cancellationToken = default)
     {
         _context.Users.Update(entity);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task UpdateUserRoleAsync(Guid userId, RoleEnum newRole, CancellationToken cancellationToken = default)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
+        if (user == null)
+        {
+            throw new InvalidOperationException("User not found.");
+        }
+
+        user.AssignRole(newRole);
+        _context.Users.Update(user);
         await _context.SaveChangesAsync(cancellationToken);
     }
 }

@@ -11,4 +11,5 @@ public interface IAuthService
     Task<RoleEnum> GetUserRolesAsync(Guid userId, CancellationToken cancellationToken = default);
     Task SendForgotPasswordTokenAsync(ForgotPasswordDto forgotPasswordDto, CancellationToken cancellationToken = default);
     Task ResetPasswordAsync(ResetPasswordDto resetPasswordDto, CancellationToken cancellationToken = default);
+    Task ChangeUserRoleAsync(ChangeUserRoleDto changeUserRoleDto, CancellationToken cancellationToken = default);
 }

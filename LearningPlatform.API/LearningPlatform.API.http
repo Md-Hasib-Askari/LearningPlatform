@@ -51,11 +51,18 @@ Content-Type: application/json
     "newPassword2": "NewPassword123!"
 }
 
+### Auth - Change Role (Admin Only)
+POST {{API_HostAddress}}/auth/change-role
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+    "userId": "927de1fc-5d70-4344-8d45-271b0c8a0034",
+    "newRole": "Instructor"
+}
+
 ### User
 ### =================================================
-
-# GET    /api/users/{id}
-# GET    /api/users/{id}/public-profile
 
 ### User - Get Current User
 GET {{API_HostAddress}}/users/me

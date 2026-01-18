@@ -1,4 +1,5 @@
 using LearningPlatform.Business.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -55,6 +56,14 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
     {
         await _authService.ResetPasswordAsync(resetPasswordDto);
+        return Ok(new BaseResponse { Success = true });
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpPost("change-role")]
+    public async Task<IActionResult> ChangeUserRole([FromBody] ChangeUserRoleDto changeUserRoleDto)
+    {
+        await _authService.ChangeUserRoleAsync(changeUserRoleDto);
         return Ok(new BaseResponse { Success = true });
     }
 }
