@@ -89,10 +89,11 @@ public class JwtService : IJwtService
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = _jwtSettings.Issuer,
                 ValidAudience = _jwtSettings.Audience,
-                IssuerSigningKey = new SymmetricSecurityKey(key)
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                RoleClaimType = ClaimTypes.Role
             }, out SecurityToken validatedToken);
 
-            // _logger.LogInformation("Token validated successfully: {ValidatedToken}", validatedToken);
+            _logger.LogInformation("Token validated successfully: {ValidatedToken}", validatedToken);
 
             return validatedToken;
         }

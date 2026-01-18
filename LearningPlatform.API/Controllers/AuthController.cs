@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using LearningPlatform.Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -65,5 +66,17 @@ public class AuthController : ControllerBase
     {
         await _authService.ChangeUserRoleAsync(changeUserRoleDto);
         return Ok(new BaseResponse { Success = true });
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpGet("test")]
+    public IActionResult AuthTest()
+    {
+        return Ok(new
+        {
+            User = User.Identity?.Name,
+            Claims = User.Claims.Select(c => new { c.Type, c.Value }),
+            Role = User.FindFirst(ClaimTypes.Role)?.Value
+        });
     }
 }

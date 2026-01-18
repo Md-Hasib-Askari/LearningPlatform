@@ -134,6 +134,7 @@ public class AuthService : IAuthService
 
     public Task ChangeUserRoleAsync(ChangeUserRoleDto changeUserRoleDto, CancellationToken cancellationToken = default)
     {
-        return _userRepository.UpdateUserRoleAsync(changeUserRoleDto.UserId, changeUserRoleDto.NewRole, cancellationToken);
+        RoleEnum newRole = GetRole.GetRoleEnum(changeUserRoleDto.NewRole);
+        return _userRepository.UpdateUserRoleAsync(changeUserRoleDto.UserId, newRole, cancellationToken);
     }
 }

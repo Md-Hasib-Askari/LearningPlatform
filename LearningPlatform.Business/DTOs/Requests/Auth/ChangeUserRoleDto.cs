@@ -7,5 +7,5 @@ public sealed class ChangeUserRoleDto
     public Guid UserId { get; set; }
 
     [Required]
-    public required RoleEnum NewRole { get; set; }
+    public required string NewRole { get; set; }
 }

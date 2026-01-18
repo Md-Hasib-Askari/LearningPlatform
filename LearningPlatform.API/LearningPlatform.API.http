@@ -1,6 +1,7 @@
 @API_HostAddress = http://localhost:5255
-@admin_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YmNjYTdkMC03NDAyLTRhOTYtODgzZS1kNjIxYmM3NGI2ZjMiLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJqdGkiOiIwMGFhY2U3YS1mM2Y0LTQ0MDQtOWZhYS04MThmNGYyMWUzNzIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJTdGFmZiIsImV4cCI6MTc2ODU4NjQxOSwiaXNzIjoiTGVhcm5pbmdQbGF0Zm9ybSIsImF1ZCI6IkxlYXJuaW5nUGxhdGZvcm1Vc2VycyJ9.tWmEBN06sab5VnWwQC_MKjGTsSPte8bJ0y_VEUPmzhc
-@user_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5MjdkZTFmYy01ZDcwLTQzNDQtOGQ0NS0yNzFiMGM4YTAwMzQiLCJlbWFpbCI6InVzZXIyQGV4YW1wbGUuY29tIiwianRpIjoiNjM0OTViMmQtMGQyNy00ZmQ4LThmN2ItZDljYjliMjRhNzE3IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiR3Vlc3QiLCJleHAiOjE3Njg1ODYzOTksImlzcyI6IkxlYXJuaW5nUGxhdGZvcm0iLCJhdWQiOiJMZWFybmluZ1BsYXRmb3JtVXNlcnMifQ.rhHv1_exdR3x-2rw4SOFAJ27uj_mhjZx82BRKq6RN7c
+@admin_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YmNjYTdkMC03NDAyLTRhOTYtODgzZS1kNjIxYmM3NGI2ZjMiLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJqdGkiOiIxMTI2NWViNC03OWFmLTRkNGQtYjliZC1kYTUzNjc4N2MxNWYiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc2ODc0NTU0MSwiaXNzIjoiTGVhcm5pbmdQbGF0Zm9ybSIsImF1ZCI6IkxlYXJuaW5nUGxhdGZvcm1Vc2VycyJ9.ChiRngEj1JS5_EmkfxKcyFwvr5xiDSHtCSUg_Y-2uTI
+@user_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NTk4NDU4My1hNDQzLTRhYTYtODZkMC0xZGJjZjBmNDA2N2EiLCJlbWFpbCI6InVzZXIzQGV4YW1wbGUuY29tIiwianRpIjoiNWM0NjRkNWUtZGEwZC00MDM3LWE4MzItMzZjOTFlOTFiZWVlIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiR3Vlc3QiLCJleHAiOjE3Njg3NDUwMDQsImlzcyI6IkxlYXJuaW5nUGxhdGZvcm0iLCJhdWQiOiJMZWFybmluZ1BsYXRmb3JtVXNlcnMifQ.eX6LRbY83_0p26CaxVoG3nNhfrg8nv5c2siATXu0xfA
+@instructor_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NTk4NDU4My1hNDQzLTRhYTYtODZkMC0xZGJjZjBmNDA2N2EiLCJlbWFpbCI6InVzZXIzQGV4YW1wbGUuY29tIiwianRpIjoiNWM0NjRkNWUtZGEwZC00MDM3LWE4MzItMzZjOTFlOTFiZWVlIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiR3Vlc3QiLCJleHAiOjE3Njg3NDUwMDQsImlzcyI6IkxlYXJuaW5nUGxhdGZvcm0iLCJhdWQiOiJMZWFybmluZ1BsYXRmb3JtVXNlcnMifQ.eX6LRbY83_0p26CaxVoG3nNhfrg8nv5c2siATXu0xfA
 
 GET {{API_HostAddress}}/health/
 Accept: application/json
@@ -57,16 +58,21 @@ Authorization: Bearer {{admin_token}}
 Content-Type: application/json
 
 {
-    "userId": "927de1fc-5d70-4344-8d45-271b0c8a0034",
+    "userId": "95984583-a443-4aa6-86d0-1dbcf0f4067a",
     "newRole": "Instructor"
 }
+
+### Auth - auth test
+GET {{API_HostAddress}}/auth/test
+Authorization: Bearer {{admin_token}}
+Accept: application/json
 
 ### User
 ### =================================================
 
 ### User - Get Current User
 GET {{API_HostAddress}}/users/me
-Authorization: Bearer {{user_token}}
+Authorization: Bearer {{instructor_token}}
 Accept: application/json
 
 ### User - Update Current User

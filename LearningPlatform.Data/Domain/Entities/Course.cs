@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using LearningPlatform.Data.Domain.Enums;
 
 public class Course : BaseEntity, IAuditableEntity
 {
-    public Guid InstructorId { get; private set; }
+    public Guid? InstructorId { get; private set; }
     public string Title { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
     public int DurationInHours { get; private set; }
