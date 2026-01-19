@@ -45,6 +45,11 @@ public class CourseService : ICourseService
         return await _courseRepo.GetByIdAsync(id, cancellationToken);
     }
 
+    public Task<Course?> PublishAsync(Guid id, PublishCourseDto publishCourseDto, CancellationToken cancellationToken)
+    {
+        return _courseRepo.PublishAsync(id, publishCourseDto.Publish, cancellationToken);
+    }
+
     public async Task<Course?> UpdateAsync(Guid id, UpdateCourseDto updateCourseDto, CancellationToken cancellationToken)
     {
         var existingCourse = await _courseRepo.GetByIdAsync(id, cancellationToken);
@@ -57,5 +62,10 @@ public class CourseService : ICourseService
 
         await _courseRepo.UpdateAsync(existingCourse, cancellationToken);
         return existingCourse;
+    }
+
+    public async Task<IEnumerable<Course>> GetCoursesByInstructorIdAsync(Guid instructorId, CancellationToken cancellationToken)
+    {
+        return await _courseRepo.GetCoursesByInstructorIdAsync(instructorId, cancellationToken);
     }
 }

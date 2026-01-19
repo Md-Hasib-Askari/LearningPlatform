@@ -1,0 +1,64 @@
+GET {{API_HostAddress}}/health/
+Accept: application/json
+
+### Auth
+### =================================================
+### Auth - Register
+POST {{API_HostAddress}}/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "John 6",
+    "lastName": "Doe 6",
+    "email": "user6@example.com",
+    "password1": "Password123!",
+    "password2": "Password123!"
+}
+
+### Auth - Login
+# POST {{API_HostAddress}}/auth/login
+POST {{API_HostAddress}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "user3@example.com",
+    "password": "Password123!"
+}
+
+### Auth - Verify User
+POST {{API_HostAddress}}/auth/verify
+Authorization: Bearer {{user_token}}
+
+### Auth - Forgot Password
+POST {{API_HostAddress}}/auth/forgot-password
+Content-Type: application/json
+
+{
+    "email": "user2@example.com"
+}
+
+### Auth - Reset Password
+POST {{API_HostAddress}}/auth/reset-password
+Content-Type: application/json
+
+{
+    "email": "user2@example.com",
+    "token": "193167",
+    "newPassword1": "NewPassword123!",
+    "newPassword2": "NewPassword123!"
+}
+
+### Auth - Change Role (Admin Only)
+POST {{API_HostAddress}}/auth/change-role
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+    "userId": "{{studentId}}",
+    "newRole": "Student"
+}
+
+### Auth - auth test
+GET {{API_HostAddress}}/auth/test
+Authorization: Bearer {{instructor_token}}
+Accept: application/json

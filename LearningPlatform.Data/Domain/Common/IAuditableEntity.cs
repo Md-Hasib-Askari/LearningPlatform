@@ -1,5 +1,5 @@
 public interface IAuditableEntity
 {
-    DateTime CreatedAt { get; }
-    DateTime? UpdatedAt { get; }
+    DateTime CreatedAt { get; set; }
+    DateTime? UpdatedAt { get; set; }
 }

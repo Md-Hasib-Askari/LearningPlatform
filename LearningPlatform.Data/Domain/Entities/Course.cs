@@ -1,19 +1,18 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Course : BaseEntity, IAuditableEntity
+public class Course : BaseEntity
 {
     public Guid? InstructorId { get; private set; }
     public string Title { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
     public int DurationInHours { get; private set; }
     public bool IsPublished { get; private set; }
-    public DateTime CreatedAt { get; private set; }
-    public DateTime? UpdatedAt { get; private set; }
 
     // Navigation Properties
     [ForeignKey(nameof(InstructorId))]
     public User? Instructor { get; private set; }
     public ICollection<Module> Modules { get; private set; } = new List<Module>();
+    public ICollection<Enrollment> Enrollments { get; private set; } = new List<Enrollment>();
 
     // Constructor
     public Course() { }
@@ -26,7 +25,6 @@ public class Course : BaseEntity, IAuditableEntity
         DurationInHours = durationInHours;
         InstructorId = instructorId ?? Guid.Empty;
         IsPublished = false;
-        CreatedAt = DateTime.UtcNow;
     }
 
     public void AssignInstructor(Guid instructorId)
@@ -35,9 +33,9 @@ public class Course : BaseEntity, IAuditableEntity
         UpdatedAt = DateTime.UtcNow;
     }
 
-    public void Publish()
+    public void Publish(bool publish)
     {
-        IsPublished = true;
+        IsPublished = publish;
         UpdatedAt = DateTime.UtcNow;
     }
 

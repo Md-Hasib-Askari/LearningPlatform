@@ -1,0 +1,78 @@
+### Course
+### =================================================
+# GET    /api/courses✅
+# GET    /api/courses/{id}✅
+# POST   /api/courses✅
+# PUT    /api/courses/{id}✅
+# DELETE /api/courses/{id}✅
+# POST   /api/courses/{id}/publish 🧑‍💻
+# POST   /api/courses/{id}/enroll 🧑‍💻
+# DELETE /api/courses/{id}/unenroll 🧑‍💻
+# GET    /api/courses/my-courses 🧑‍💻
+# GET    /api/courses/my-enrollments 🧑‍💻
+# GET    /api/courses/instructor-courses 🧑‍💻
+# GET    /api/courses/{id}/students 🧑‍💻
+# GET    /api/courses/recommended
+# GET    /api/courses/trending
+# POST   /api/courses/{id}/review
+
+### Course - Get All Courses
+GET {{API_HostAddress}}/courses
+Accept: application/json
+
+### Course - Get Course by ID
+GET {{API_HostAddress}}/courses/{{courseId}}
+Accept: application/json
+
+### Course - Create New Course
+@instructorId = 95984583-a443-4aa6-86d0-1dbcf0f4067a
+POST {{API_HostAddress}}/courses    
+Authorization: Bearer {{instructor_token}}
+Content-Type: application/json
+
+# {
+#     "title": "Object-Oriented Programming 2",
+#     "description": "Learn the principles of object-oriented programming using Java.",
+#     "instructorId": "{{instructorId}}",
+#     "DurationInHours": 35
+# }
+{
+    "title": "Dummy Course for Testing",
+    "description": "This is a dummy course created for testing purposes.",
+    "instructorId": "{{instructorId}}",
+    "DurationInHours": 35
+}
+
+### Course - Update Course by ID
+PUT {{API_HostAddress}}/courses/{{courseId}}
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+    "title": "Introduction to Programming - Updated",
+    "description": "Learn the basics of programming using Python. Updated content included.",
+    "instructorId": "{{instructorId}}",
+    "category": "Programming",
+    "price": 59.99,
+    "DurationInHours": 25
+}
+
+### Course - Delete Course by ID
+DELETE {{API_HostAddress}}/courses/{{courseId}}
+Authorization: Bearer {{admin_token}}
+Accept: application/json
+
+### Course - Publish Course
+POST {{API_HostAddress}}/courses/{{courseId}}/publish
+Authorization: Bearer {{instructor_token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "publish": true
+}
+
+### Course - Get Instructor's Courses
+GET {{API_HostAddress}}/courses/instructor-courses
+Authorization: Bearer {{instructor_token}}
+Accept: application/json

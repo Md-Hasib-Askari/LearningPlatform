@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using LearningPlatform.Data.Domain.Enums;
 
-public class User : BaseEntity, IAuditableEntity
+public class User : BaseEntity
 {
     [Required]
     [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Invalid email format")]
@@ -28,12 +28,10 @@ public class User : BaseEntity, IAuditableEntity
 
     public RoleEnum Role { get; private set; } = RoleEnum.Guest;
 
-    // Audit
-    public DateTime CreatedAt { get; private set; }
-    public DateTime? UpdatedAt { get; private set; }
-
     // Navigation Properties
     public ICollection<Course> Courses { get; private set; } = new List<Course>();
+    public ICollection<Enrollment> Enrollments { get; private set; } = new List<Enrollment>();
+    // public ICollection<UserProgress> UserProgresses { get; private set; } = new List<UserProgress>();
 
 
     // Factory Methods

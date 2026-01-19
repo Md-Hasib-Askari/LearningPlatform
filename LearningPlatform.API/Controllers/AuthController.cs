@@ -68,7 +68,7 @@ public class AuthController : ControllerBase
         return Ok(new BaseResponse { Success = true });
     }
 
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     [HttpGet("test")]
     public IActionResult AuthTest()
     {

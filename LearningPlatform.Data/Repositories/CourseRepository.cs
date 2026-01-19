@@ -28,18 +28,31 @@ public class CourseRepository : IGenericRepository<Course>, ICourseRepository
         return await _db.Courses.SingleOrDefaultAsync(c => c.Id == id, cancellationToken);
     }
 
-    public async Task<IEnumerable<Course>> GetCoursesByInstructorIdAsync(Guid instructorId)
+    public async Task<IEnumerable<Course>> GetCoursesByInstructorIdAsync(Guid instructorId, CancellationToken cancellationToken = default)
     {
         return await _db.Courses
             .Where(c => c.InstructorId == instructorId)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Course>> GetPublishedCoursesAsync()
+    public async Task<IEnumerable<Course>> GetPublishedCoursesAsync(CancellationToken cancellationToken = default)
     {
         return await _db.Courses
             .Where(c => c.IsPublished)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<Course?> PublishAsync(Guid id, bool publish, CancellationToken cancellationToken)
+    {
+        var course = await _db.Courses.SingleOrDefaultAsync(c => c.Id == id, cancellationToken);
+        if (course == null)
+        {
+            return null;
+        }
+
+        course.Publish(publish);
+        await _db.SaveChangesAsync(cancellationToken);
+        return course;
     }
 
     public async Task UpdateAsync(Course entity, CancellationToken cancellationToken = default)

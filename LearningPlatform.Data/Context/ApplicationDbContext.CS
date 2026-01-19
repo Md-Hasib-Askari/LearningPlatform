@@ -10,6 +10,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<Course> Courses { get; set; } = null!;
     public DbSet<Module> Modules { get; set; } = null!;
     public DbSet<Lesson> Lessons { get; set; } = null!;
+    public DbSet<Enrollment> Enrollments { get; set; } = null!;
+    // public DbSet<UserProgress> UserProgresses { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

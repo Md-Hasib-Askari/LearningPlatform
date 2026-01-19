@@ -18,6 +18,7 @@ public static class DataDependencyInjection
         services.AddScoped<ICourseRepository, CourseRepository>();
         services.AddScoped<IModuleRepository, ModuleRepository>();
         services.AddScoped<ILessonRepository, LessonRepository>();
+        services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
 
         // Other data layer services can be registered here
 

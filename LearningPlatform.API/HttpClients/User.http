@@ -1,0 +1,43 @@
+@API_HostAddress = http://localhost:5255
+@admin_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YmNjYTdkMC03NDAyLTRhOTYtODgzZS1kNjIxYmM3NGI2ZjMiLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJqdGkiOiI2MTNhYThmNy0yMDNjLTRkZDAtOTYzOS0wOTI0N2NkZWVhZWIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc2ODc1NDQxNiwiaXNzIjoiTGVhcm5pbmdQbGF0Zm9ybSIsImF1ZCI6IkxlYXJuaW5nUGxhdGZvcm1Vc2VycyJ9.HLJ869NirMIZrgcWAfl9TQK9QglPQ9-9R9xsTUfx-xo
+@user_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NTk4NDU4My1hNDQzLTRhYTYtODZkMC0xZGJjZjBmNDA2N2EiLCJlbWFpbCI6InVzZXIzQGV4YW1wbGUuY29tIiwianRpIjoiNWM0NjRkNWUtZGEwZC00MDM3LWE4MzItMzZjOTFlOTFiZWVlIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiR3Vlc3QiLCJleHAiOjE3Njg3NDUwMDQsImlzcyI6IkxlYXJuaW5nUGxhdGZvcm0iLCJhdWQiOiJMZWFybmluZ1BsYXRmb3JtVXNlcnMifQ.eX6LRbY83_0p26CaxVoG3nNhfrg8nv5c2siATXu0xfA
+@instructor_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NTk4NDU4My1hNDQzLTRhYTYtODZkMC0xZGJjZjBmNDA2N2EiLCJlbWFpbCI6InVzZXIzQGV4YW1wbGUuY29tIiwianRpIjoiZTViZGE1NzQtZjM1My00M2QxLTg3YzgtNGNiZWU4YTQxYmE2IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiSW5zdHJ1Y3RvciIsImV4cCI6MTc2ODc1NDQzNSwiaXNzIjoiTGVhcm5pbmdQbGF0Zm9ybSIsImF1ZCI6IkxlYXJuaW5nUGxhdGZvcm1Vc2VycyJ9.UW7Dn0soQ8IP3wE7XN4rx3Mx-xn2u-_YzGE1_ijDpcc
+
+### User
+### =================================================
+
+### User - Get Current User
+GET {{API_HostAddress}}/users/me
+Authorization: Bearer {{instructor_token}}
+Accept: application/json
+
+### User - Update Current User
+PUT {{API_HostAddress}}/users/me
+Authorization: Bearer {{user_token}}
+Content-Type: application/json
+
+{
+    "firstName": "John 2",
+    "lastName": "Doe 2"
+}
+
+### User - Update Current User Password
+PUT {{API_HostAddress}}/users/me/password
+Authorization: Bearer {{user_token}}
+Content-Type: application/json
+
+{
+    "currentPassword": "AnotherPassword123!",
+    "newPassword1": "AnotherPassword123!",
+    "newPassword2": "AnotherPassword123!"
+}
+
+### User - Get User by ID
+@userId = 927de1fc-5d70-4344-8d45-271b0c8a0034
+GET {{API_HostAddress}}/users/{{userId}}
+Authorization: Bearer {{admin_token}}
+Accept: application/json
+
+### User - Get User Public Profile by ID
+GET {{API_HostAddress}}/users/{{userId}}/public-profile
+Accept: application/json

@@ -1,0 +1,22 @@
+### Enrollment 
+### =================================================
+
+### Enrollment - Enroll in Course
+POST {{API_HostAddress}}/courses/{{courseId}}/enroll
+Authorization: Bearer {{user_token}}
+Accept: application/json
+
+### Enrollment - Unenroll from Course
+DELETE {{API_HostAddress}}/courses/{{courseId}}/unenroll
+Authorization: Bearer {{user_token}}
+Accept: application/json
+
+### Enrollment - Get My Enrollments
+GET {{API_HostAddress}}/enrollments/my-enrollments
+Authorization: Bearer {{user_token}}
+Accept: application/json
+
+### Enrollment - Get Students Enrolled in Course
+GET {{API_HostAddress}}/courses/{{courseId}}/students
+Authorization: Bearer {{instructor_token}}
+Accept: application/json

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -75,5 +76,29 @@ public class CourseController : ControllerBase
         }
 
         return NoContent();
+    }
+
+    [HttpPost("{id:guid}/publish")]
+    public async Task<IActionResult> PublishCourse(Guid id, [FromBody] PublishCourseDto publishCourseDto, CancellationToken cancellationToken)
+    {
+        var publishedCourse = await _courseService.PublishAsync(id, publishCourseDto, cancellationToken);
+        if (publishedCourse == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(publishedCourse);
+    }
+
+    [HttpGet("instructor-courses")]
+    public async Task<IActionResult> GetInstructorCourses(CancellationToken cancellationToken)
+    {
+        var instructorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (instructorId == null || !Guid.TryParse(instructorId, out var instructorIdGuid))
+        {
+            return NotFound();
+        }
+        var courses = await _courseService.GetCoursesByInstructorIdAsync(instructorIdGuid, cancellationToken);
+        return Ok(courses);
     }
 }

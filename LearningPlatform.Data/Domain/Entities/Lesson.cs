@@ -8,9 +8,6 @@ public class Lesson : BaseEntity
     public int OrderIndex { get; private set; }
     public bool IsCompleted { get; private set; }
 
-    public DateTime CreatedAt { get; private set; }
-    public DateTime UpdatedAt { get; private set; }
-
     // Navigation Properties
     public Guid ModuleId { get; private set; }
 
