@@ -40,11 +40,16 @@ public class EnrollmentService : IEnrollmentService
         return await _enrollmentRepo.GetEnrollmentsByUserIdAsync(userId, cancellationToken);
     }
 
-    public async Task<IEnumerable<User>> GetStudentsEnrolledInCourseAsync(Guid courseId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<EnrolledStudentDto>> GetStudentsEnrolledInCourseAsync(Guid courseId, CancellationToken cancellationToken = default)
     {
-        var enrollments = await _enrollmentRepo.GetEnrollmentsByCourseIdAsync(courseId, cancellationToken);
-        _logger.LogInformation("Found {EnrollmentCount} enrollments for course {CourseId}", enrollments.Count(), courseId);
-        return enrollments.Select(e => e.User);
+        var students = await _enrollmentRepo.GetStudentsEnrolledInCourseAsync(courseId, cancellationToken);
+        _logger.LogInformation("Found {EnrollmentCount} enrollments for course {CourseId}", students.Count(), courseId);
+        return students.Select(s => new EnrolledStudentDto
+        {
+            UserId = s.Id,
+            FullName = $"{s.FirstName} {s.LastName}",
+            Email = s.Email
+        });
     }
 
     public async Task<bool> UnenrollUserAsync(Guid userId, Guid courseId, CancellationToken cancellationToken = default)
