@@ -6,14 +6,16 @@ public class UserProgress : BaseEntity
     public Guid LessonId { get; private set; }
     public DateTime LastAccessedAt { get; private set; }
     public bool IsCompleted { get; private set; }
+    public int TimeSpentSeconds { get; private set; }
     public DateTime? CompletedAt { get; private set; }
 
     // Navigation properties
     [ForeignKey(nameof(UserId))]
-    public required User User { get; set; }
+    public User User { get; set; } = null!;
 
     [ForeignKey(nameof(LessonId))]
-    public required Lesson Lesson { get; set; }
+    public Lesson Lesson { get; set; } = null!;
+
     // Constructors
     public UserProgress() { }
 
@@ -23,10 +25,11 @@ public class UserProgress : BaseEntity
         UserId = userId;
         LessonId = lessonId;
         LastAccessedAt = DateTime.UtcNow;
+        TimeSpentSeconds = 0;
         IsCompleted = false;
         CreatedAt = DateTime.UtcNow;
     }
-    public void UpdateProgress(bool isCompleted)
+    public void UpdateProgress(bool isCompleted, int timeSpentSeconds = 0)
     {
         IsCompleted = isCompleted;
         if (isCompleted)
@@ -34,10 +37,12 @@ public class UserProgress : BaseEntity
             CompletedAt = DateTime.UtcNow;
         }
         LastAccessedAt = DateTime.UtcNow;
+        TimeSpentSeconds = timeSpentSeconds;
         UpdatedAt = DateTime.UtcNow;
     }
-    public void UpdateLastAccessed(DateTime lastAccessed)
+    public void UpdateLastAccessed(DateTime lastAccessed, int timeSpentSeconds = 0)
     {
+        TimeSpentSeconds = timeSpentSeconds;
         LastAccessedAt = lastAccessed;
         UpdatedAt = DateTime.UtcNow;
     }

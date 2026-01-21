@@ -16,6 +16,7 @@ public static class BusinessDependencyInjection
         services.AddScoped<IModuleService, ModuleService>();
         services.AddScoped<ILessonService, LessonService>();
         services.AddScoped<IEnrollmentService, EnrollmentService>();
+        services.AddScoped<IQuizService, QuizService>();
 
         // Email Service Registration
         var emailSettings = configuration.GetSection("Email");

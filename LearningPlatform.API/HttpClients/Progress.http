@@ -1,0 +1,37 @@
+### Progress
+### ==========================================
+
+### Progress - Get User Dashboard Progress
+GET {{API_HostAddress}}/progress/dashboard
+Authorization: Bearer {{user_token}}
+Accept: application/json
+
+### Progress - Get Course Progress by Course ID
+GET {{API_HostAddress}}/progress/courses/{{courseId}}
+Authorization: Bearer {{user_token}}
+Accept: application/json
+
+### Progress - Track Lesson Completion
+POST {{API_HostAddress}}/progress/lessons/{{lessonId}}/track
+Authorization: Bearer {{user_token}}
+Content-Type: application/json
+
+{
+    "completed": true,
+    "timeSpentMinutes": 15
+}
+
+### Progress - Get Weekly Analytics
+GET {{API_HostAddress}}/progress/analytics/weekly
+Authorization: Bearer {{user_token}}
+Accept: application/json
+
+### Progress - Get Monthly Analytics
+GET {{API_HostAddress}}/progress/analytics/monthly
+Authorization: Bearer {{user_token}}
+Accept: application/json
+
+### Progress - Get Leaderboard
+GET {{API_HostAddress}}/progress/leaderboard
+Authorization: Bearer {{user_token}}
+Accept: application/json

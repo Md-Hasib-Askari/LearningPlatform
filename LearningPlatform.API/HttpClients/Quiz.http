@@ -1,0 +1,104 @@
+### Quiz
+### =================================================
+
+### Quiz - Get Quiz by ID
+GET {{API_HostAddress}}/quizzes/{{quizId}}
+Accept: application/json
+
+### Quiz - Create New Quiz for Course
+POST {{API_HostAddress}}/courses/{{courseId}}/quizzes
+Authorization: Bearer {{instructor_token}}
+Content-Type: application/json
+
+{
+    "title": "Quiz 1: Introduction Quiz",
+    "description": "A quiz to test your knowledge on the introduction module.",
+    "timeLimitMinutes": 30
+}
+
+### Quiz - Update Quiz by ID
+@quizId = a1b2c3d4-e5f6-7890
+PUT {{API_HostAddress}}/quizzes/{{quizId}}
+Authorization: Bearer {{instructor_token}}
+Content-Type: application/json
+
+{
+    "title": "Quiz 1: Introduction Quiz - Updated",
+    "description": "Updated description for the introduction quiz.",
+    "timeLimitMinutes": 25
+}
+
+### Quiz - Delete Quiz by ID
+DELETE {{API_HostAddress}}/quizzes/{{quizId}}
+Authorization: Bearer {{instructor_token}}
+Accept: application/json
+
+### Quiz Question - Add Question to Quiz
+POST {{API_HostAddress}}/quizzes/{{quizId}}/questions
+Authorization: Bearer {{instructor_token}}
+Content-Type: application/json
+
+{
+    "questionText": "What is the capital of France?",
+    "questionType": "multiple-choice",
+    "options": [
+        {"text": "Berlin", "isCorrect": false},
+        {"text": "Madrid", "isCorrect": false},
+        {"text": "Paris", "isCorrect": true},
+        {"text": "Rome", "isCorrect": false}
+    ],
+    "points": 10
+}
+
+### Quiz Question - Update Question by ID
+@questionId = d4c3b2a1-0987-6543
+PUT {{API_HostAddress}}/questions/{{questionId}}
+Authorization: Bearer {{instructor_token}}
+Content-Type: application/json
+
+{
+    "questionText": "What is the capital city of France?",
+    "questionType": "multiple-choice",
+    "options": [
+        {"text": "Berlin", "isCorrect": false},
+        {"text": "Madrid", "isCorrect": false},
+        {"text": "Paris", "isCorrect": true},
+        {"text": "Lisbon", "isCorrect": false}
+    ],
+    "points": 15
+}
+
+### Quiz Question - Delete Question by ID
+DELETE {{API_HostAddress}}/questions/{{questionId}}
+Authorization: Bearer {{instructor_token}}
+Accept: application/json
+
+### Quiz Attempt - Start Quiz Attempt
+POST {{API_HostAddress}}/quizzes/{{quizId}}/attempts/start
+Authorization: Bearer {{user_token}}
+Accept: application/json
+
+### Quiz Attempt - Submit Quiz Attempt
+@attemptId = 123e4567-e89b-12d3-a456-426614174000
+POST {{API_HostAddress}}/quizzes/attempts/{{attemptId}}/submit
+Authorization: Bearer {{user_token}}
+Content-Type: application/json
+
+{
+    "answers": [
+        {
+            "questionId": "d4c3b2a1-0987-6543",
+            "selectedOptionIds": ["optionIdForParis"]
+        }
+    ]
+}
+
+### Quiz Attempt - Get Quiz Attempt Result
+GET {{API_HostAddress}}/quizzes/attempts/{{attemptId}}/result
+Authorization: Bearer {{user_token}}
+Accept: application/json
+
+### Quiz Attempt - Get My Quiz Attempts for a Quiz
+GET {{API_HostAddress}}/quizzes/{{quizId}}/attempts/my-attempts
+Authorization: Bearer {{user_token}}
+Accept: application/json

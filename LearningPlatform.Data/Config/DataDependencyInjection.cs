@@ -19,6 +19,10 @@ public static class DataDependencyInjection
         services.AddScoped<IModuleRepository, ModuleRepository>();
         services.AddScoped<ILessonRepository, LessonRepository>();
         services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+        services.AddScoped<IQuizRepository, QuizRepository>();
+        services.AddScoped<IQuestionRepository, QuestionRepository>();
+        services.AddScoped<IQuestionOptionRepository, QuestionOptionRepository>();
+        services.AddScoped<IQuizAttemptRepository, QuizAttemptRepository>();
 
         // Other data layer services can be registered here
 

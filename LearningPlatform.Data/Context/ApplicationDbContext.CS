@@ -11,7 +11,12 @@ public class ApplicationDbContext : DbContext
     public DbSet<Module> Modules { get; set; } = null!;
     public DbSet<Lesson> Lessons { get; set; } = null!;
     public DbSet<Enrollment> Enrollments { get; set; } = null!;
-    // public DbSet<UserProgress> UserProgresses { get; set; } = null!;
+    public DbSet<UserProgress> UserProgresses { get; set; } = null!;
+    public DbSet<Quiz> Quizzes { get; set; } = null!;
+    public DbSet<Question> Questions { get; set; } = null!;
+    public DbSet<QuestionOption> QuestionOptions { get; set; } = null!;
+    public DbSet<QuizAttempt> QuizAttempts { get; set; } = null!;
+    public DbSet<AttemptAnswer> AttemptAnswers { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
