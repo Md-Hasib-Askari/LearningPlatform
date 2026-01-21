@@ -259,13 +259,19 @@ public class QuizService : IQuizService
             throw new ArgumentException("Quiz attempt not found", nameof(submitQuizRequest.AttemptId));
         }
 
+        var quiz = await _quizRepo.GetByIdAsync(attempt.QuizId);
+        if (quiz == null)
+        {
+            throw new ArgumentException("Quiz not found", nameof(attempt.QuizId));
+        }
+
         // calculate score and correctness based on submitted answers
         var answers = submitQuizRequest.Answers;
         var optionIds = answers.Values.ToList();
         var options = await _optionRepo.GetByIdsAsync(optionIds);
         int correctAnswersCount = options.Count(o => o.IsCorrect);
         double scorePercentage = (double)correctAnswersCount / answers.Count * 100;
-        bool isPassed = scorePercentage >= 40.0;
+        bool isPassed = scorePercentage >= quiz.PassingScore;
 
 
         var submitQuizAttemptDto = new SubmitQuizAttemptDto

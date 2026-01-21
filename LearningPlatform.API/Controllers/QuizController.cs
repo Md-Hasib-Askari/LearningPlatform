@@ -254,6 +254,7 @@ public class QuizController : ControllerBase
 
         try
         {
+            submitRequest.AttemptId = attemptId;
             var attempt = await _quizService.SubmitQuizAttemptAsync(submitRequest);
             return Ok(attempt);
         }

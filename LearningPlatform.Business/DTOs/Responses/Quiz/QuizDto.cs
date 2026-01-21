@@ -1,8 +1,8 @@
 public class QuizDto
 {
     public Guid Id { get; set; }
-    public Guid CourseId { get; set; }
-    public Guid ModuleId { get; set; }
+    public Guid? CourseId { get; set; }
+    public Guid? ModuleId { get; set; }
     public string Title { get; set; } = null!;
     public string Description { get; set; } = null!;
     public int PassingScore { get; set; }
